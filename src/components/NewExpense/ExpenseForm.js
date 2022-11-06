@@ -2,35 +2,38 @@ import { useState } from "react";
 import "./ExpenseForm.css";
 
 const ExpenseForm = () => {
-  //   const [enteredTitle, setEnteredTitle] = useState("");
-  //   const [enteredAmount, setEnteredAmount] = useState("");
-  //   const [enteredDate, setEnteredDate] = useState("");
+    const [enteredTitle, setEnteredTitle] = useState("");
+    const [enteredAmount, setEnteredAmount] = useState("");
+    const [enteredDate, setEnteredDate] = useState("");
 
-  const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmount: "",
-    enteredDate: "",
-  });
+//   const [userInput, setUserInput] = useState({ <-- object way
+//     enteredTitle: "",
+//     enteredAmount: "",
+//     enteredDate: "",
+//   });
 
   const titleChangeHandler = (e) => {
-    setUserInput((prevState) => {
-        return ({...prevState, enteredTitle: e.target.value,})
-    })
+    // setUserInput((prevState) => { <-- good practice
+    //     return ({...prevState, enteredTitle: e.target.value,})
+        setEnteredTitle(e.target.value)
+    }
   const amountChangeHandler = (e) => {
-    setUserInput({
-        ...userInput,
-        enteredAmount: e.target.value,
-      });
+    // setUserInput({
+    //     ...userInput, <--- works but not great
+    //     enteredAmount: e.target.value,
+    //   });
+    setEnteredAmount(e.target.value)
   };
   const dateChangeHandler = (e) => {
-    setUserInput({
-        ...userInput,
-        enteredDate: e.target.value,
-      });
+    setEnteredDate(e.target.value)
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault()
+  }
+
   return (
-    <form action="">
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label htmlFor="">Title</label>
