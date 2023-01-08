@@ -3,36 +3,39 @@ import ExpenseForm from "./ExpenseForm";
 import { useState } from "react";
 
 const NewExpense = (props) => {
-	const [onLoad, setOnLoad] = useState(true);
+	const [isEditing, setIsEditing] = useState(false);
 
-	const displayForm = () => {
-		setOnLoad((prev) => !onLoad);
+	const startEditing = () => {
+		setIsEditing(true);
 	};
-	const firstDisplay = (
-		<button
-			type="button"
-			onClick={displayForm}
-		>
-			Add New Expense
-		</button>
-	);
+
+	const stopEditingHandler = () => {
+		setIsEditing(false);
+	};
+
 	const saveExpenseDataHandler = (enteredExpenseData) => {
 		//this function is used to communicate with the parent comp. NewExpense
 		const expenseData = {
 			...enteredExpenseData,
 			id: Math.random().toString() //not perfect but gens a random id; could end up duplicating
 		};
-		console.log(expenseData);
 		props.onAddExpense(expenseData);
+		setIsEditing(false);
 	};
 
 	return (
 		<div className="new-expense">
-			{onLoad ? (
-				firstDisplay
-			) : (
+			{!isEditing && (
+				<button
+					onClick={startEditing}
+					type="button"
+				>
+					Add New Expense
+				</button>
+			)}
+			{isEditing && (
 				<ExpenseForm
-					displayForm={displayForm}
+					stopEditingHandler={stopEditingHandler}
 					onSaveExpenseData={saveExpenseDataHandler}
 				/>
 			)}
